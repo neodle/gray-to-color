@@ -77,7 +77,7 @@ II. 데이터 EDA (탐색적 데이터 분석)
 
 -  EDA 이후, 최종 데이터 셋 결정 
 -  최종 데이터 셋 결정 후 프로젝트에 쓰이는 데이터 셋 생성
--  **데이터셋 구성** (훈련 8(1215) : 검증 1(151) : 테스트 1(151))
+-  **데이터셋 구성** [Train (color 1500 : gray-scale 1500)] : [Validation (color 1500 : gray-scale 1500)] : Test [gray-scale 150]
 
 III. EDA 분석 
 
@@ -103,32 +103,25 @@ III. EDA 분석
 
 **컬러 이미지**에서 **R, G, B** 세 채널 모두 대체로 균일하게 분포되어 색상의 균형이 잘 맞춰져있음
 
-- 데이터셋 구성 (훈련 8(1215) : 검증 1(151) : 테스트 1(151))
-
 IV. 데이터 전처리 
 
-- 이미지 크기 조정, 형식 변환으로 모델에 적합한 데이터로 변환
-- (필요에 따라 데이터 증강으로 데이터 셋 보완 시도 가능)
-
-V. 데이터 검증 및 저장
-
-- 레이블링 및 전처리가 완료된 데이터 검증을 통해 오류나 누락 부분 확인
-- 전처리 데이터를 학습용 데이터 셋으로 저장
+- 모든 이미지가 동일한 크기를 가지므로 모델 학습에 앞서 별도의 리사이징 과정 및 이미지 데이터 전처리 과정이 필요하지 않음
 
 ---
 
 # 모델 설명 
-https://docs.ultralytics.com/ko (Ultralytics 페이지)
 
-**YOLO에는 Detect, Segment, Classify, Pose, OBB 등의 기술을 제공**
+**Pix2Pix** 
 
-## YOLO (You Only Look Once) - Segmentation
+## Pix2Pix - U-Net based Generator + PatchGAN Discriminator
 
 <p align="center">
-<img src="https://github.com/user-attachments/assets/a76bd8c6-6879-48ab-ae86-c87a77a886b2" width="700" height="400" />
+<img src="https://github.com/user-attachments/assets/92efdf19-051b-421b-9006-aa8322b542e5" width="700" height="400" />
 </p>
 
-## Segmentation 기술 선정 배경 및 강점 
+## Pix2Pix 모델 선정 배경 및 구조
+
+## U-Net based Generator
 
 **1. Detection과 다르게 Segmentation은 객체의 경계를 넘어 픽셀 단위로 훼손 영역과 정상 영역을 정확히 구분 가능** 
 
