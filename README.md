@@ -77,7 +77,7 @@ II. 데이터 EDA (탐색적 데이터 분석)
 
 -  EDA 이후, 최종 데이터 셋 결정 
 -  최종 데이터 셋 결정 후 프로젝트에 쓰이는 데이터 셋 생성
--  **데이터셋 구성** [Train (color 1500 : gray-scale 1500)] : [Validation (color 1500 : gray-scale 1500)] : Test [gray-scale 150]
+-  **데이터셋 구성** [Train (color 1500 : gray-scale 1500)] : [Validation (color 100 : gray-scale 100)] : Test [gray-scale 150]
 
 III. EDA 분석 
 
@@ -109,7 +109,7 @@ IV. 데이터 전처리
 
 ---
 
-# 모델 설명 
+# Model Architecture  
 
 **Pix2Pix** 
 
@@ -121,25 +121,65 @@ IV. 데이터 전처리
 
 ## Pix2Pix 모델 선정 배경 및 구조
 
+## Pix2Pix 모델 선정 배경
+
+**1. 흑백 이미지 → 컬러 이미지 색상화 픽셀 단위의 정밀한 매핑이 필요한 image-to-image translation 문제** 
+
+**2. U-Net 구조는 인코더(압축)와 디코더(복원) 사이에 skip connection이 있음 → 저수준의 공간 정보를 고해상도로 정확히 복원할 수 있음**
+
+**3. U-Net 구조 덕분에 색상화 시 중요한 윤곽선, 질감, 경계 정보가 잘 유지됨**
+
+**4. 일반적인 Discriminator는 이미지 전체를 보고 Real/Fake를 구분**
+
+**5. 색상화 문제에서는 국소 영역(작은 패치)의 색 배치나 질감이 자연스러운지가 더 중요함**
+
+**6. PatchGAN은 전체 이미지를 하나로 처리하지 않고, 공통된 소형 CNN 필터를 반복 적용하여 패치를 평가함 → 모델 파라미터 수가 적고 속도도 빠르며, 학습이 안정적임**
+
+**<결론>** U-Net based Generator와 PatchGAN Discriminator가 결합된 구조인 pix2pix 모델을 선정 
+
 ## U-Net based Generator
 
-**1. Detection과 다르게 Segmentation은 객체의 경계를 넘어 픽셀 단위로 훼손 영역과 정상 영역을 정확히 구분 가능** 
+**1. 인코더(encoder) 부분에서 입력 이미지가 점점 축소되며 특징을 추출함** 
 
-**2. 정확한 크기 및 위치, 작은 균열이나 구멍 등 감지에 용이함. -> 유지보수 작업에 세부적 데이터 제공 가능**
+**2. 디코더(decoder) 부분에서 이미지에 대한 해상도를 다시 복원함**
 
-**3. 데이터 시각화 및 분석 용이, 색상별 분류를 통해 직관적으로 도로의 상태를 시각화 가능 -> 보수 필요 영역 판단**
+**3. 점선으로 이어진 화살표는 입력 정보와 출력 정보를 직접 연결하는 U-Net의 핵심인 스킵 커넥션이며, 저수준 정보를 고수준 레이어에 직접 전달해 디테일 유지함**
 
-**4. 클래스 별 Segmentation을 통해 정교한 구분 가능 -> 손상 정도에 따라 맞춤형 유지 보수 계획 수립 가능**
+## Patch GAN Discriminator
 
-**5. 객체의 중복(중첩)을 처리 가능, 포괄적 도로 관리 가능**
+**1. U-Net 기반의 Generator (T) 부분에서 생성한 결과 이미지인 T(x)와 정답 이미지인 Ground Truth y 두개의 이미지 이용해 판별에 사용** 
+
+**2. CNN 기반으로 점점 공간의 크기를 줄여가며 특징 추출을 하며, P1, P2, P3, P4의 여러 단계에서 T(x)와 Ground Truth y 쌍의 정합성을 확인함**
+
+**3. 마지막 출력에서 실제 이미지인지, Generator가 만든 가짜 이미지인지 판단**
+
+**4. 판별 결과를 바탕으로 Generator는 더 정답과 비슷한 T(x)를 만들도록 학습됨**
 
 ---
 
-# 프로젝트 결과 
+# Model Analysis 
+
+## 모델의 문제점
 
 <p align="center">
-<img src= "https://github.com/user-attachments/assets/06b58542-c0b6-49e3-9d72-0f4e51a75fc4" width="700" height="400" />
+<img src= "https://github.com/user-attachments/assets/75ccf1ca-92ff-4786-a7ea-92f09f820bd6" width="700" height="400" />
 </p>
+
+**1.** 결과 이미지(Result Image)가 원본 이미지와 비교했을 때 품질이 좋지 않음
+
+**2.** 성능지표 또한 수치가 높게 나오지 않음
+
+**성능지표(Evaluation metrix)**
+
+**1. PSNR** - Peak Signal-to-noise ratio
+
+**2. SSIM** - Structural Similarity Index Measure
+
+**3. LPIPS** – Learned Perceptual Image Patch Similarity
+
+**4. FID** - Fréchet inception distance
+
+
 
 | line | damaged_line |
 |---------|---------|
