@@ -179,7 +179,7 @@ IV. 데이터 전처리
 
 **2. G_LOSS** - 학습 결과 Discriminator의 loss가 일정하게 낮은 반면, Generator의 loss는 epoch이 증가하여도 감소하지 않고 높은 수준(10 ~ 12)에서 진동함
 
-| Gray-sclae img EDA | Color img EDA |
+| Evaluation Matrix | LOSS Graph |
 |---------|---------|
 | <img src= "https://github.com/user-attachments/assets/358dd685-c8a1-47c1-81fa-5069cb44206d" width="550" height="420" /> | <img src= "https://github.com/user-attachments/assets/f6f4919b-dbac-46fc-a46d-7c7078365128" width="550" height="420" /> |
 
@@ -187,58 +187,73 @@ IV. 데이터 전처리
 
 **1. 하이퍼 파라미터 조정** : epoch 50회, early-stopping, Learning rate 조정
 
-**2. G_LOSS** - 학습 결과 Discriminator의 loss가 일정하게 낮은 반면, Generator의 loss는 epoch이 증가하여도 감소하지 않고 높은 수준(10 ~ 12)에서 진동함
+**2. G_LOSS** - Generator가 충분히 학습할 시간을 확보, 8번째 epoch 이후부터 Discriminator를 학습시킴 -> 초반에 Discriminator 학습을 막아 Generator가 더 안정적으로 학습 초기화 가능하게 함
 
+| Improve Evaluation Matrix | Improve LOSS Graph |
+|---------|---------|
+| <img src= "https://github.com/user-attachments/assets/a6e3338f-b729-4d04-b2ea-1c3ab0f3ae26" width="550" height="420" /> | <img src= "https://github.com/user-attachments/assets/31b2f404-0173-4082-9645-940656137a9a" width="550" height="420" /> |
 
+# Image Colorization Performance Comparison
 
+<p align="center">
+<img src= "https://github.com/user-attachments/assets/fc5eb83b-0ff9-4a00-bc1e-e18c08d8fde8" width="900" height="400" />
+</p>
 
+**생각할 점: Iil posed problem**
+모델의 성능이좋다고 결과 이미지의 성능이 좋아지는것이 아님
+
+따라서 사용자의 주관적 평가에 초점을 두기도 함
+
+이번에 시도한 프로젝트에서는 운이 좋게도 성능이 가장 좋은 모델에서 나온 결과 이미지가 사용자 주관적 평가에서도 좋은 평가를 받음
+
+<p align="center">
+<img src= "https://github.com/user-attachments/assets/8ed6cdff-9e64-4666-8568-a73cf7184723" width="900" height="200" />
+</p>
+
+# Service deploy
+
+<p align="center">
+<img src= "https://github.com/user-attachments/assets/9ab66b7d-0d88-4310-9efc-6514ff7f64ef" width="800" height="400" />
+</p>
+
+파이썬 기반의 마이크로 웹 프레임워크인 **FLASK** 를 이용해 웹페이지를 개발하여 서비스 방안을 구상
 
 ---
 
-# 프로젝트의 한계 및 향후 연구 방향
+# 프로젝트의 한계 및 Future works
 
 ---
+**프로젝트의 한계**
+
+<p align="center">
+<img src= "https://github.com/user-attachments/assets/8e719aa3-b714-458c-ace8-d7eac8a301e7" width="800" height="200" />
+</p>
+
+* 학습되지 않은 이미지 데이터에 대한 색상화를 하지 못함 -> 학습 이미지 데이터 부
+
 
 **1. 학습 데이터 추가 및 증강 시도**
 
-다양한 환경에서의 도로의 차선 데이터를 학습하여, 속도나 조명, 날씨 관계에 따른 변화에도 안정적인 탐지가 가능할 수 있도록 개발한다. (데이터 증강 시도)
+학습 데이터의 양과 다양성을 확장하여 모델의 일반화 성능 향상 그리고 보다 다양한 장면, 조명, 피사체 등을 포함하는 이미지 수집하여 복잡한 컬러화 상황 대응력 강화
 
-**2. 훼손된 차선 경고 시스템**
+**2. 평가 지표 및 주관적 평가 보완**
 
-차선 훼손 탐지 알고리즘은 도로노면 훼손 정보를 실시간으로 수집하기에 좋은 수단이다.
-
-이를 통해 탐지 관련 노이즈 특성이 강하게 나타나는 경우 운전자에게 경고 시스템으로 제공하는 환경을 조성한다.
+사용자 주관적 평가 데이터를 축적하여 실제로 서비스를 이용하는 사용자 관점의 품질 평가 반영
 
 ---
 
 # 기대효과
 
-**1. 블랙박스를 활용한 차선 훼손 탐지 기술 개발**
+**1. 역사적 가치의 복원과 대중화**
 
-블랙박스 카메라와 Yolov8의 결합으로 실시간 포트홀 탐지 시스템을 개발할 수 있다.
+흑백 사진·영상을 컬러로 전환함으로써 과거가 더욱 현실감 있게 다가오며, 역사의 생생한 감각을 느낄 수 있음
 
-도로의 포트홀과 차선 훼손을 신속하고 정확하게 탐지할 수 있다.
+단절된 시간 속 인물과 공간에 감정을 이입하게 함으로써 공감과 관심을 이끌어내어 사람들의 역사적 거리감을 해소할 수 있음
 
-**2. 데이터 기반 실시간 도로 관리 시스템**
+**2. 심리적·정서적 기대효과**
 
-실시간 탐지를 통해 축적된 데이터를 바탕으로 도로 관리 시스템의 성능을 향상한다.
+개인의 추억, 기억 또는 감정을 자극하여 향수와 감동을 유도할 수 있음
 
-도로 유지 보수 작업의 우선순위를 효율적으로 설정하 수 있는 기반을 마련한다.
+**3. 기록 보존 및 연구 자료 활용**
 
-도로 유지 보수의 자동화 및 지능화를 촉진 시킬 수 있다.
-
-**3. 도로 안전성 향상**
-
-차선 훼손 탐지 및 대응으로 도로 이용자들의 안전을 크게 향상 시킬 수 있다. 
-
-교통사고 발생률을 줄이고, 도로 이용자들에게 보다 안전한 운전 환경을 제공한다.
-
-**4. 경제적 비용 절감**
-
-차량 소유주와 보험사, 도로관리 당국의 경제적 부담을 경감시킬 수 있다.
-
-인건비를 크게 들이지 않고, 효율적인 도로 유지 보수로 인해 국가 또는 지역 사회의 도로 관리 비용을 절감한다.
-
-**5. 공공 서비스의 개선**
-
-도로 관리의ㅣ 효율성 향상으로 도로 이용자들은 더 나은 도로를 제공 받으며, 도로 관리 당국의 신뢰성을 높이고, 공공 인프라에 대한 만족도를 증대시킬 수 있다.
+복원된 컬러 이미지들이 다양한 분야에서 인공지능 연구·개발에 유용한 자료가 됨
