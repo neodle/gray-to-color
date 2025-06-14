@@ -71,7 +71,7 @@
 
 I. 데이터 셋 수집
 
-- 다양한 쌍이미지 기반 이미지 데이터 셋 수집 (다양한 풍경, 인물, 동물, 꽃, 음식 등)
+- 다양한 쌍 이미지 기반의 이미지 데이터 셋 수집 (다양한 풍경, 인물, 동물, 꽃, 음식 등)
 
 II. 데이터 EDA (탐색적 데이터 분석) 
 
@@ -83,7 +83,7 @@ III. EDA 분석
 
 - 컬러 이미지 데이터와 흑백 이미지 데이터 높이(Height)와 너비(width) 분포
 
-| Gray-sclae img EDA | Color img EDA |
+| Gray-scale img EDA | Color img EDA |
 |---------|---------|
 | <img src= "https://github.com/user-attachments/assets/c6f8657a-f4f0-4979-ba07-77073cb719b3" width="550" height="420" /> | <img src= "https://github.com/user-attachments/assets/f89caa2f-705a-43a0-98b6-4a7c5fbc8bd9" width="550" height="420" /> |
 
