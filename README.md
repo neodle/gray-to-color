@@ -81,17 +81,11 @@ II. 데이터 EDA (탐색적 데이터 분석)
 
 III. EDA 분석 
 
-- 컬러 이미지 데이터의 높이(Height)와 너비(width) 분포
+- 컬러 이미지 데이터와 흑백 이미지 데이터 높이(Height)와 너비(width) 분포
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/c6f8657a-f4f0-4979-ba07-77073cb719b3" width="700" />
-</p>
-
-- 흑백 이미지 데이터의 높이(Height)와 너비(width) 분포
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f89caa2f-705a-43a0-98b6-4a7c5fbc8bd9" width="700" />
-</p>
+| Gray-sclae img EDA | Color img EDA |
+|---------|---------|
+| <img src= "https://github.com/user-attachments/assets/c6f8657a-f4f0-4979-ba07-77073cb719b3" width="550" height="420" /> | <img src= "https://github.com/user-attachments/assets/f89caa2f-705a-43a0-98b6-4a7c5fbc8bd9" width="550" height="420" /> |
 
 - Color 이미지 데이터의 RGB channel 분포
 
@@ -179,13 +173,25 @@ IV. 데이터 전처리
 
 **4. FID** - Fréchet inception distance
 
+## 모델의 성능 저하의 원인
 
+**1. 하이퍼 파라미터 조정** : PSNR, SSIM이 모두 낮고 LPIPS, FID이 모두 높다면 학습이 부족하다는 의미임 (현재 epoch 10회)
 
-| line | damaged_line |
+**2. G_LOSS** - 학습 결과 Discriminator의 loss가 일정하게 낮은 반면, Generator의 loss는 epoch이 증가하여도 감소하지 않고 높은 수준(10 ~ 12)에서 진동함
+
+| Gray-sclae img EDA | Color img EDA |
 |---------|---------|
-| <img src= "https://github.com/user-attachments/assets/db30706b-2e1e-4ebc-bba3-c1ca0cedb60a" width="550" height="420" /> | <img src= "https://github.com/user-attachments/assets/63a5f6c7-721f-4516-b376-869e9d08b759" width="550" height="420" /> |
+| <img src= "https://github.com/user-attachments/assets/358dd685-c8a1-47c1-81fa-5069cb44206d" width="550" height="420" /> | <img src= "https://github.com/user-attachments/assets/f6f4919b-dbac-46fc-a46d-7c7078365128" width="550" height="420" /> |
 
-https://github.com/user-attachments/assets/f1894f31-74da-459b-a37e-5598c637c830 
+# Model Improvement
+
+**1. 하이퍼 파라미터 조정** : epoch 50회, early-stopping, Learning rate 조정
+
+**2. G_LOSS** - 학습 결과 Discriminator의 loss가 일정하게 낮은 반면, Generator의 loss는 epoch이 증가하여도 감소하지 않고 높은 수준(10 ~ 12)에서 진동함
+
+
+
+
 
 ---
 
