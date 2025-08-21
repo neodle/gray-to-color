@@ -11,7 +11,7 @@
 * **Dataset** : 프로젝트에 사용한 데이터 셋 소개
 
   
-* **Model Architecture** : pix2pix 모델 소개
+* **Model Architecture** : pix2pix 모델 
 
 
 * **Model Analysis** : 모델 분석 결과
